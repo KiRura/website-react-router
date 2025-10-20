@@ -1,17 +1,25 @@
-FROM node:latest AS base
+# https://github.com/remix-run/react-router-templates/blob/main/default/Dockerfile
 
-FROM base AS install
-RUN mkdir -p /temp/dev
-COPY package.json /temp/dev/
-RUN cd /temp/dev \
-   && npm i
+FROM node:latest AS development-dependencies-env
+COPY . /app
+WORKDIR /app
+RUN npm ci
 
-FROM base AS release
-COPY --from=install /temp/dev/node_modules node_modules
-COPY . .
+FROM node:latest AS production-dependencies-env
+COPY ./package.json /app/
+WORKDIR /app
+RUN npm ci --omit=dev
 
+FROM node:latest AS build-env
 ENV NODE_ENV=production
+COPY . /app/
+COPY --from=development-dependencies-env /app/node_modules /app/node_modules
+WORKDIR /app
 RUN npm run build
 
-USER node
+FROM node:latest
+COPY ./package.json package-lock.json /app/
+COPY --from=production-dependencies-env /app/node_modules /app/node_modules
+COPY --from=build-env /app/build /app/build
+WORKDIR /app
 CMD ["npm", "run", "start"]

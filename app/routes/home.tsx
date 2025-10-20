@@ -209,7 +209,7 @@ export default function Home() {
 			<Box borderTopWidth="1px" py="8">
 				<Container centerContent>
 					<Image
-						src="https://count.getloli.com/@KiRura-website?darkmode=auto"
+						src={`https://count.getloli.com/@KiRura-website-rr${process.env.NODE_ENV === "production" ? "" : "-dev"}?darkmode=auto`}
 						loading="lazy"
 					/>
 				</Container>
