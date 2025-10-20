@@ -3,12 +3,12 @@
 FROM node:latest AS development-dependencies-env
 COPY . /app
 WORKDIR /app
-RUN npm ci
+RUN npm i
 
 FROM node:latest AS production-dependencies-env
 COPY ./package.json /app/
 WORKDIR /app
-RUN npm ci --omit=dev
+RUN npm i --omit=dev
 
 FROM node:latest AS build-env
 ENV NODE_ENV=production
