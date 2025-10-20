@@ -6,6 +6,6 @@ export default defineConfig({
 	plugins: [reactRouter(), tsconfigPaths()],
 	server: {
 		host: "0.0.0.0",
-		allowedHosts: [".kirura.f5.si"],
+		allowedHosts: true,
 	},
 });
