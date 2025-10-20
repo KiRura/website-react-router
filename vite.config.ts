@@ -4,4 +4,7 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
 	plugins: [reactRouter(), tsconfigPaths()],
+	server: {
+		allowedHosts: [".kirura.f5.si"],
+	},
 });
