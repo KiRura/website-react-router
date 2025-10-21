@@ -47,6 +47,8 @@ export default function Layout() {
 		<>
 			<title>KiRura</title>
 			<meta name="description" content="しがないReact Routerサイト" />
+			<meta name="og:image" content="/kirura/512p.png" />
+			{/* nextjsのbaseurlが欲しい */}
 			<meta name="twitter:card" content="summary" />
 			<meta name="darkreader-lock" />
 			<Box
