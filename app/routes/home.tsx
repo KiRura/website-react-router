@@ -20,6 +20,12 @@ import type { IconType } from "react-icons";
 import { FaDiscord, FaEnvelope, FaTwitter, FaYoutube } from "react-icons/fa6";
 import { LuCalendar, LuThumbsUp } from "react-icons/lu";
 
+export function headers() {
+	return {
+		"Cache-Control": "max-age=31536000",
+	};
+}
+
 const links = [
 	{
 		name: "Email",

@@ -3,14 +3,16 @@ import {
 	Button,
 	ButtonGroup,
 	Container,
+	EmptyState,
 	HStack,
 	IconButton,
 	Image,
 	Link,
 	Span,
+	Spinner,
 } from "@chakra-ui/react";
 import { LuGithub } from "react-icons/lu";
-import { NavLink, Outlet, Link as RRLink } from "react-router";
+import { NavLink, Outlet, Link as RRLink, useNavigation } from "react-router";
 import { ColorModeButton } from "~/components/ui/color-mode";
 
 export function links() {
@@ -33,12 +35,15 @@ export function links() {
 
 const pages = [
 	{
-		name: "Blog",
-		to: "blog",
+		name: "呟き",
+		to: "posts",
 	},
 ];
 
 export default function Layout() {
+	const navigation = useNavigation();
+	const isNavigating = Boolean(navigation.location);
+
 	return (
 		<>
 			<title>KiRura</title>
@@ -119,7 +124,18 @@ export default function Layout() {
 					</ButtonGroup>
 				</Container>
 			</Box>
-			<Outlet />
+			{isNavigating ? (
+				<EmptyState.Root>
+					<EmptyState.Content>
+						<EmptyState.Indicator>
+							<Spinner />
+						</EmptyState.Indicator>
+						<EmptyState.Title fontFamily="mono">Loading...</EmptyState.Title>
+					</EmptyState.Content>
+				</EmptyState.Root>
+			) : (
+				<Outlet />
+			)}
 		</>
 	);
 }
