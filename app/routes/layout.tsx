@@ -36,10 +36,6 @@ const pages = [
 		name: "Blog",
 		to: "blog",
 	},
-	{
-		name: "Param",
-		to: "ids/123456",
-	},
 ];
 
 export default function Layout() {
