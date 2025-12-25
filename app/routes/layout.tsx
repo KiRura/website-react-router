@@ -1,19 +1,6 @@
-import {
-	Box,
-	Button,
-	ButtonGroup,
-	Container,
-	EmptyState,
-	HStack,
-	IconButton,
-	Image,
-	Link,
-	Span,
-	Spinner,
-} from "@chakra-ui/react";
-import { LuGithub } from "react-icons/lu";
-import { NavLink, Outlet, Link as RRLink, useNavigation } from "react-router";
-import { ColorModeButton } from "~/components/ui/color-mode";
+import { Container, EmptyState, Spinner } from "@chakra-ui/react";
+import { Outlet, useNavigation } from "react-router";
+import Header from "~/components/navigation/header";
 
 export function links() {
 	return [
@@ -33,13 +20,6 @@ export function links() {
 	];
 }
 
-const pages = [
-	{
-		name: "呟き",
-		to: "posts",
-	},
-];
-
 export default function Layout() {
 	const navigation = useNavigation();
 	const isNavigating = Boolean(navigation.location);
@@ -52,87 +32,19 @@ export default function Layout() {
 			{/* nextjsのbaseurlが欲しい */}
 			<meta name="twitter:card" content="summary" />
 			<meta name="darkreader-lock" />
-			<Box
-				as="header"
-				pos="sticky"
-				top="0"
-				zIndex="docked"
-				py="2.5"
-				bg="bg"
-				borderBottomWidth="1px"
-			>
-				<Container centerContent flexDir="row" justifyContent="space-between">
-					<HStack as="nav" gap={["6", "10"]}>
-						<Link fontSize="xl" fontWeight="bold" asChild>
-							<RRLink to="/">
-								<Image
-									src="/kirura/512p.png"
-									alt="kirura icon"
-									rounded="full"
-									boxSize="8"
-									minW="8"
-									mr="1"
-									fetchPriority="high"
-								/>
-								<Span hideBelow="sm">KiRura</Span>
-							</RRLink>
-						</Link>
-						<HStack gap="6">
-							{pages.map((page) => (
-								<Button
-									key={page.to}
-									asChild
-									variant="plain"
-									px="0"
-									size="sm"
-									color="fg.muted"
-									borderWidth="0"
-									rounded="none"
-									css={{
-										'&:is([class *= "active"])': {
-											fontWeight: "medium",
-											color: "fg",
-											borderYWidth: "2px",
-											borderBottomColor: "orange.solid",
-										},
-										'&:is([class *= "pending"])': {
-											fontWeight: "medium",
-											color: "fg",
-											animation: "pulse 1s ease-in-out infinite",
-										},
-									}}
-									_hover={{
-										color: "fg",
-									}}
-								>
-									<NavLink to={page.to}>{page.name}</NavLink>
-								</Button>
-							))}
-						</HStack>
-					</HStack>
-					<ButtonGroup variant="ghost">
-						<IconButton asChild>
-							<a
-								href="https://github.com/KiRura/website-react-router"
-								target="_blank"
-								rel="noopener"
-							>
-								<LuGithub />
-							</a>
-						</IconButton>
-						<ColorModeButton />
-					</ButtonGroup>
-				</Container>
-			</Box>
+
+			<Header />
 			{isNavigating ? (
-				<EmptyState.Root>
-					<EmptyState.Content>
-						<EmptyState.Indicator>
-							<Spinner />
-						</EmptyState.Indicator>
-						<EmptyState.Title fontFamily="mono">Loading...</EmptyState.Title>
-					</EmptyState.Content>
-				</EmptyState.Root>
+				<Container>
+					<EmptyState.Root>
+						<EmptyState.Content>
+							<EmptyState.Indicator>
+								<Spinner />
+							</EmptyState.Indicator>
+							<EmptyState.Title fontFamily="mono">Loading...</EmptyState.Title>
+						</EmptyState.Content>
+					</EmptyState.Root>
+				</Container>
 			) : (
 				<Outlet />
 			)}
