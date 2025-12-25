@@ -23,7 +23,7 @@ export default ({ loaderData }: Route.ComponentProps) => {
 					src={loaderData.coverImage.url}
 					alt={loaderData.coverImage.alt}
 					w="full"
-					h="40"
+					h="64"
 				/>
 			)}
 			<Heading as="h1">{loaderData.title}</Heading>

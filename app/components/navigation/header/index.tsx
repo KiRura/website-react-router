@@ -16,17 +16,20 @@ import { pages } from "../page";
 
 export default function Header() {
 	return (
-		<Box
-			as="header"
-			pos="sticky"
-			top="0"
-			zIndex="docked"
-			py="2.5"
-			bg="bg"
-			borderBottomWidth="1px"
-		>
+		<Box as="header" pos="sticky" top="0" zIndex="docked" py="2">
 			<Container centerContent flexDir="row" justifyContent="space-between">
-				<HStack as="nav" gap={["6", "10"]}>
+				<HStack
+					as="nav"
+					p="2.5"
+					gap={["2", "4"]}
+					bg="bg/80"
+					borderWidth="1px"
+					rounded="md"
+					shadow="md"
+					// --backdrop-blur: var(--chakra-empty, ) !important;
+					// hey chakra wtf is this????
+					backdropFilter="blur({blurs.md})"
+				>
 					<Link fontSize="xl" fontWeight="bold" asChild>
 						<RRLink to="/">
 							<Image
@@ -41,13 +44,14 @@ export default function Header() {
 							<Span hideBelow="sm">KiRura</Span>
 						</RRLink>
 					</Link>
-					<HStack gap="6">
+					<HStack gap="4">
 						{pages.map((page) => (
 							<Button
-								key={page.to}
+								key={page.to.toString()}
 								asChild
 								variant="plain"
 								px="0"
+								mx="2"
 								size="sm"
 								color="fg.muted"
 								borderWidth="0"
@@ -69,12 +73,22 @@ export default function Header() {
 									color: "fg",
 								}}
 							>
-								<NavLink to={page.to}>{page.name}</NavLink>
+								<NavLink to={page.to}>{page.label}</NavLink>
 							</Button>
 						))}
 					</HStack>
 				</HStack>
-				<ButtonGroup variant="ghost">
+				<ButtonGroup
+					variant="ghost"
+					p="2"
+					bg="bg/80"
+					borderWidth="1px"
+					rounded="md"
+					shadow="md"
+					// --backdrop-blur: var(--chakra-empty, ) !important;
+					// hey chakra wtf is this????
+					backdropFilter="blur({blurs.md})"
+				>
 					<IconButton asChild>
 						<a
 							href="https://github.com/KiRura/website-react-router"

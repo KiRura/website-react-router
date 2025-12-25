@@ -5,6 +5,7 @@ import {
 	Container,
 	Flex,
 	Heading,
+	Highlight,
 	HStack,
 	Image,
 	Link,
@@ -19,6 +20,7 @@ import { differenceInYears } from "date-fns";
 import type { IconType } from "react-icons";
 import { FaDiscord, FaEnvelope, FaTwitter, FaYoutube } from "react-icons/fa6";
 import { LuCalendar, LuThumbsUp } from "react-icons/lu";
+import ZZZ from "~/components/zzz";
 
 export function headers() {
 	return {
@@ -122,8 +124,46 @@ const info: {
 export default function Home() {
 	return (
 		<Box as="main">
+			<ZZZ
+				pos="absolute"
+				top="0"
+				w="full"
+				h={{ "2xlDown": "vh", "2xl": "60rem" }}
+				maxH="full"
+				overflow="hidden"
+				userSelect="none"
+				_after={{
+					pos: "absolute",
+					top: "0",
+					content: `""`,
+					w: "full",
+					h: "full",
+					bgGradient: "to-b",
+					gradientFrom: "transparent",
+					gradientTo: "bg",
+				}}
+			/>
 			<Container py="8" spaceY="4">
-				<Heading as="h1">Hello KiRura</Heading>
+				<Center h={{ "2xlDown": "vh", "2xl": "50rem" }} maxH="80vh">
+					<Text
+						as="h1"
+						lineHeight="moderate"
+						fontSize={["4xl", "7xl"]}
+						fontWeight="bold"
+						fontFamily={`"Google Sans Code", "Noto Sans JP", sans-serif`}
+						whiteSpace="pre-wrap"
+						filter="drop-shadow(0px 4px 8px {colors.bg/80})"
+					>
+						Hello!,
+						<br />
+						<Highlight
+							query={["きるら", "(7)KiRura"]}
+							styles={{ color: "orange.300" }}
+						>
+							{"きるら,\n(7)KiRura,"}
+						</Highlight>
+					</Text>
+				</Center>
 				<Heading>Links</Heading>
 				<SimpleGrid columns={[1, 2, 3, 4]} gap="2">
 					{links.map((link) => (

@@ -1,6 +1,8 @@
-export const pages = [
+import type { PageType } from "~/interface/pages";
+
+export const pages: PageType[] = [
 	{
-		name: "呟き",
-		to: "posts",
+		label: "呟き",
+		to: "/posts",
 	},
 ];
