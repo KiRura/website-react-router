@@ -1,18 +1,30 @@
 import { Center, type CenterProps, SimpleGrid, Text } from "@chakra-ui/react";
 
-export default function ZZZ(props: CenterProps) {
+export default function ZZZ(
+	props: CenterProps & {
+		disableHighlight?: boolean;
+		disableOptimize?: boolean;
+		text?: string;
+	},
+) {
 	const columns = 5;
 	const num = columns * 20;
 	const kirura = new Array(num).fill(0).map((_, index) => ({
 		index,
 		p: () => (
 			<Text
-				data-highlight={num / 2 <= index || undefined}
+				data-highlight={
+					(!props.disableHighlight && num / 2 <= index) || undefined
+				}
 				data-right={index % (columns * 2) >= columns || undefined}
+				data-optimize={
+					(!props.disableOptimize && columns * 2 <= index) || undefined
+				}
 				aria-hidden
 				fontSize="16rem"
 				fontWeight="black"
 				fontStyle="italic"
+				fontStretch="ultra-condensed"
 				px="3"
 				color="fg.subtle/8"
 				m="-2px"
@@ -22,21 +34,22 @@ export default function ZZZ(props: CenterProps) {
 				animationDuration="37s"
 				animationIterationCount="infinite"
 				animationTimingFunction="linear"
-				smDown={{
-					color: "white/8",
-					bg: "orange.400",
-				}}
 				css={{
 					"&[data-highlight]": {
 						bg: "orange.400",
 						color: "white/8",
+					},
+					"&[data-optimize]": {
+						smDown: {
+							display: "none",
+						},
 					},
 					"&[data-right]": {
 						animationName: "slide-to-right-full",
 					},
 				}}
 			>
-				KiRura
+				{props.text || "KiRura"}
 			</Text>
 		),
 	}));

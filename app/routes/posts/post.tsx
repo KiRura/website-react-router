@@ -7,6 +7,7 @@ import {
 	Text,
 	VStack,
 } from "@chakra-ui/react";
+import { data } from "react-router";
 import { Prose } from "~/components/ui/prose";
 import { getPost } from "~/lib/cms.server";
 import { logger } from "~/lib/logger";
@@ -20,7 +21,11 @@ export function headers() {
 
 export async function loader({ params }: Route.LoaderArgs) {
 	logger.info("fetching...", params.id);
-	return await getPost(params.id);
+	try {
+		return await getPost(params.id);
+	} catch (_error) {
+		throw data("not found", { status: 404, statusText: "そこに無ければ無い" });
+	}
 }
 
 export default ({ loaderData }: Route.ComponentProps) => {

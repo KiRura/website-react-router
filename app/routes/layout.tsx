@@ -1,7 +1,9 @@
-import { Box, Container, EmptyState, Spinner } from "@chakra-ui/react";
-import { Outlet, useNavigation } from "react-router";
+import { Box, Code, Container, EmptyState, Spinner } from "@chakra-ui/react";
+import { isRouteErrorResponse, Outlet, useNavigation } from "react-router";
 import Footer from "~/components/navigation/footer";
 import Header from "~/components/navigation/header";
+import ZZZ from "~/components/zzz";
+import type { Route } from "./+types/layout";
 
 export function links() {
 	return [
@@ -54,6 +56,56 @@ export default function Layout() {
 				)}
 			</Box>
 			<Footer />
+		</>
+	);
+}
+
+export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
+	let message = "おお";
+	let details = "予期しないエラー";
+	let stack: string | undefined;
+
+	if (isRouteErrorResponse(error)) {
+		message = error.status.toString();
+		details = error.statusText || details;
+	} else if (import.meta.env.DEV && error && error instanceof Error) {
+		details = error.message;
+		stack = error.stack;
+	}
+
+	return (
+		<>
+			<title>{message === "404" ? "そこに無ければ無い" : "エラー"}</title>
+			<meta name="description" content={details} />
+			<ZZZ
+				pos="absolute"
+				w="full"
+				h="full"
+				overflow="auto"
+				disableHighlight
+				disableOptimize
+				text={message}
+			/>
+			<Container as="main">
+				<EmptyState.Root size="lg">
+					<EmptyState.Content>
+						<EmptyState.Title
+							as="h1"
+							fontSize="7xl"
+							lineHeight={1}
+							fontFamily="mono"
+						>
+							{message}
+						</EmptyState.Title>
+						<EmptyState.Description>{details}</EmptyState.Description>
+						{stack && (
+							<pre>
+								<Code>{stack}</Code>
+							</pre>
+						)}
+					</EmptyState.Content>
+				</EmptyState.Root>
+			</Container>
 		</>
 	);
 }

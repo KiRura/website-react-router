@@ -12,7 +12,6 @@ import {
 import { TZDate } from "@date-fns/tz";
 import { format } from "date-fns";
 import { Link as RRLink } from "react-router";
-import FormatDate from "~/components/format-date";
 import type { PostType } from "~/interface/cms";
 import { getList } from "~/lib/cms.server";
 import { logger } from "~/lib/logger";
@@ -59,10 +58,10 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 												"yyyy年M月d日",
 											)}
 										>
-											<FormatDate
-												date={post.publishedAt}
-												formatStr="yyyy年M月d日"
-											/>
+											{() =>
+												// ???
+												format(new Date(post.publishedAt ?? 0), "yyyy年M月d日")
+											}
 										</ClientOnly>
 									</Timeline.Description>
 								)}

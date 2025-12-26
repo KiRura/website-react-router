@@ -54,7 +54,15 @@ export const ColorModeButton = React.forwardRef<
 >(function ColorModeButton(props, ref) {
 	const { toggleColorMode } = useColorMode();
 	return (
-		<ClientOnly fallback={<Skeleton boxSize="10" />}>
+		<ClientOnly
+			fallback={
+				<Skeleton>
+					<IconButton {...props}>
+						<FaSun />
+					</IconButton>
+				</Skeleton>
+			}
+		>
 			<IconButton
 				onClick={toggleColorMode}
 				aria-label="Toggle color mode"

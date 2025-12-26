@@ -1,10 +1,11 @@
 import {
 	Box,
+	Button,
 	Card,
 	Center,
+	Clipboard,
 	Container,
 	Flex,
-	Heading,
 	Highlight,
 	HStack,
 	Image,
@@ -30,43 +31,50 @@ export function headers() {
 
 const links: {
 	label: string;
+	id: string;
 	description: string;
 	href: string;
 	icon: IconType;
 }[] = [
 	{
 		label: "Email",
+		id: "kirura@kirura.f5.si",
 		icon: FaEnvelope,
 		description: "なんかあれば",
 		href: "mailto:kirura@kirura.f5.si",
 	},
 	{
 		label: "Twitter",
+		id: "@7KiRura",
 		icon: FaTwitter,
 		description: "通知オンは100人 ブロックは3万人",
 		href: "https://x.com/7KiRura",
 	},
 	{
 		label: "Discord",
+		id: "7kirura",
 		icon: FaDiscord,
 		description: "いつもここにいる",
 		href: "https://discord.com/users/606093171151208448",
 	},
 	{
 		label: "YouTube",
+		id: "@7KiRura",
 		icon: FaYoutube,
 		description: "上げたい時に上げてる",
-		href: "https://www.youtube.com/@7kirura",
+		href: "https://www.youtube.com/@7KiRura",
 	},
 ];
 
 const icons = [
 	{
 		src: "/kirura/1024p.png",
+		alt: "K",
 		subtle: "ブランド的なもの",
 	},
 	{
 		src: "/kirura/amagi.png",
+		alt: "Kの擬人化",
 		subtle: (
 			<>
 				{"Art: "}
@@ -149,11 +157,11 @@ export default function Home() {
 				}}
 			/>
 			<Container py="8" spaceY="4">
-				<Center h={{ "2xlDown": "vh", "2xl": "50rem" }} maxH="80vh">
+				<Center h={{ "2xlDown": "vh", "2xl": "50rem" }} maxH="90vh">
 					<Text
 						as="h1"
 						lineHeight="moderate"
-						fontSize={["4xl", "7xl"]}
+						fontSize={["5xl", "6xl", "7xl"]}
 						fontWeight="bold"
 						fontFamily={`"Google Sans Code", "Noto Sans JP", sans-serif`}
 						whiteSpace="pre-wrap"
@@ -169,7 +177,6 @@ export default function Home() {
 						</Highlight>
 					</Text>
 				</Center>
-				<Heading>Links</Heading>
 				<SimpleGrid columns={[1, 2, 3, 4]} gap="2">
 					{links.map((link) => (
 						<Card.Root
@@ -178,8 +185,14 @@ export default function Home() {
 							size="sm"
 							_hover={{ bg: "bg.muted" }}
 							transition="backgrounds"
+							overflow="hidden"
 						>
-							<Card.Body gap="1.5">
+							<Card.Header
+								flexDirection="row"
+								alignItems="start"
+								justifyContent="space-between"
+								overflow="hidden"
+							>
 								<LinkOverlay href={link.href} target="_blank" asChild>
 									<Card.Title asChild>
 										<Link colorPalette="orange">
@@ -187,6 +200,36 @@ export default function Home() {
 										</Link>
 									</Card.Title>
 								</LinkOverlay>
+								<Clipboard.Root
+									value={link.id}
+									maxW="5/12"
+									h="fit"
+									lineHeight={1}
+								>
+									<Clipboard.Trigger asChild>
+										<Button
+											p="0"
+											variant="plain"
+											size="xs"
+											h="fit"
+											w="full"
+											aria-label="copy id"
+											fontFamily="mono"
+											textAlign="right"
+											color="fg.muted"
+											gap="1"
+										>
+											<Clipboard.ValueText
+												overflow="hidden"
+												overflowWrap="anywhere"
+												textOverflow="ellipsis"
+											/>
+											<Clipboard.Indicator pos="sticky" right="0" />
+										</Button>
+									</Clipboard.Trigger>
+								</Clipboard.Root>
+							</Card.Header>
+							<Card.Body pt="1">
 								<Card.Description>{link.description}</Card.Description>
 							</Card.Body>
 						</Card.Root>
@@ -194,7 +237,6 @@ export default function Home() {
 				</SimpleGrid>
 				<SimpleGrid columns={{ md: 2 }} gap="6">
 					<Flex h="full" direction="column">
-						<Heading>Icons</Heading>
 						<Center h="full">
 							<SimpleGrid columns={2} gap="4" maxW="2xl">
 								{icons.map((icon) => (
@@ -205,15 +247,15 @@ export default function Home() {
 											rounded="full"
 											w="full"
 											aspectRatio="square"
+											alt={icon.alt}
 										/>
-										<Text color="fg.subtle">{icon.subtle}</Text>
+										<Text color="fg.muted">{icon.subtle}</Text>
 									</VStack>
 								))}
 							</SimpleGrid>
 						</Center>
 					</Flex>
 					<Flex h="full" direction="column">
-						<Heading>Info</Heading>
 						<Center h="full">
 							<Table.Root w={{ md: "fit" }}>
 								<Table.Body>
@@ -261,6 +303,9 @@ export default function Home() {
 				<Container centerContent>
 					<Image
 						src={`https://count.getloli.com/@KiRura-website-rr${process.env.NODE_ENV === "production" ? "" : "-dev"}?darkmode=auto`}
+						alt="moe counter"
+						w="315px"
+						h="100px"
 					/>
 				</Container>
 			</Box>
