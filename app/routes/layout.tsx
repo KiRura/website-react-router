@@ -1,5 +1,6 @@
-import { Container, EmptyState, Spinner } from "@chakra-ui/react";
+import { Box, Container, EmptyState, Spinner } from "@chakra-ui/react";
 import { Outlet, useNavigation } from "react-router";
+import Footer from "~/components/navigation/footer";
 import Header from "~/components/navigation/header";
 
 export function links() {
@@ -33,21 +34,26 @@ export default function Layout() {
 			<meta name="twitter:card" content="summary" />
 			<meta name="darkreader-lock" />
 
-			<Header />
-			{isNavigating ? (
-				<Container>
-					<EmptyState.Root>
-						<EmptyState.Content>
-							<EmptyState.Indicator>
-								<Spinner />
-							</EmptyState.Indicator>
-							<EmptyState.Title fontFamily="mono">Loading...</EmptyState.Title>
-						</EmptyState.Content>
-					</EmptyState.Root>
-				</Container>
-			) : (
-				<Outlet />
-			)}
+			<Box smDown={{ minH: "vh" }}>
+				<Header />
+				{isNavigating ? (
+					<Container>
+						<EmptyState.Root>
+							<EmptyState.Content>
+								<EmptyState.Indicator>
+									<Spinner />
+								</EmptyState.Indicator>
+								<EmptyState.Title fontFamily="mono">
+									Loading...
+								</EmptyState.Title>
+							</EmptyState.Content>
+						</EmptyState.Root>
+					</Container>
+				) : (
+					<Outlet />
+				)}
+			</Box>
+			<Footer />
 		</>
 	);
 }

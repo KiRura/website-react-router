@@ -3,8 +3,6 @@ import {
 	ClientOnly,
 	Container,
 	For,
-	Heading,
-	HStack,
 	Image,
 	LinkOverlay,
 	Separator,
@@ -13,12 +11,12 @@ import {
 } from "@chakra-ui/react";
 import { TZDate } from "@date-fns/tz";
 import { format } from "date-fns";
-import { NavLink } from "react-router";
+import { Link as RRLink } from "react-router";
 import FormatDate from "~/components/format-date";
 import type { PostType } from "~/interface/cms";
 import { getList } from "~/lib/cms.server";
 import { logger } from "~/lib/logger";
-import type { Route } from "./+types/posts";
+import type { Route } from "./+types";
 
 export function headers() {
 	return {
@@ -36,12 +34,8 @@ export async function loader() {
 
 export default function Page({ loaderData }: Route.ComponentProps) {
 	return (
-		<Container as="main">
-			<HStack>
-				<Heading>Blog</Heading>
-				<Separator variant="dashed" flex={1} />
-			</HStack>
-			<Timeline.Root maxW="2xl" w="full" mx="auto">
+		<Container as="main" py="8">
+			<Timeline.Root as="section" maxW="2xl" w="full" mx="auto">
 				<For each={loaderData.contents}>
 					{(post) => (
 						<Timeline.Item key={post.id}>
@@ -49,7 +43,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 								<Timeline.Separator />
 								<Timeline.Indicator />
 							</Timeline.Connector>
-							<Timeline.Content>
+							<Timeline.Content as="article">
 								{post.publishedAt && (
 									<Timeline.Description
 										as="time"
@@ -57,6 +51,7 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 											post.publishedAt,
 											"Asia/Tokyo",
 										).toISOString()}
+										w="fit"
 									>
 										<ClientOnly
 											fallback={format(
@@ -73,12 +68,14 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 								)}
 								<Card.Root
 									size="sm"
+									variant="elevated"
 									data-hasimage={Boolean(post.coverImage) || undefined}
 									css={{ "&[data-hasimage]": { roundedTop: "0" } }}
 									_hover={{
 										bg: "bg.muted",
 									}}
 									transition="backgrounds"
+									overflow="hidden"
 								>
 									{post.coverImage && (
 										<>
@@ -99,13 +96,15 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 											<Separator />
 										</>
 									)}
-									<Card.Body>
-										<LinkOverlay asChild>
-											<Card.Title fontSize="xl" asChild>
-												<NavLink to={`/posts/${post.id}`}>{post.title}</NavLink>
-											</Card.Title>
-										</LinkOverlay>
-										{post.subtitle && <Text>{post.subtitle}</Text>}
+									<Card.Body spaceY="1">
+										<Card.Title as="h1" fontSize="xl">
+											<LinkOverlay asChild>
+												<RRLink to={`/posts/${post.id}`}>{post.title}</RRLink>
+											</LinkOverlay>
+										</Card.Title>
+										{post.subtitle && (
+											<Text color="fg.muted">{post.subtitle}</Text>
+										)}
 									</Card.Body>
 								</Card.Root>
 							</Timeline.Content>

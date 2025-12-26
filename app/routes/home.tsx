@@ -28,27 +28,32 @@ export function headers() {
 	};
 }
 
-const links = [
+const links: {
+	label: string;
+	description: string;
+	href: string;
+	icon: IconType;
+}[] = [
 	{
-		name: "Email",
+		label: "Email",
 		icon: FaEnvelope,
 		description: "なんかあれば",
 		href: "mailto:kirura@kirura.f5.si",
 	},
 	{
-		name: "Twitter",
+		label: "Twitter",
 		icon: FaTwitter,
 		description: "通知オンは100人 ブロックは3万人",
 		href: "https://x.com/7KiRura",
 	},
 	{
-		name: "Discord",
+		label: "Discord",
 		icon: FaDiscord,
 		description: "いつもここにいる",
 		href: "https://discord.com/users/606093171151208448",
 	},
 	{
-		name: "YouTube",
+		label: "YouTube",
 		icon: FaYoutube,
 		description: "上げたい時に上げてる",
 		href: "https://www.youtube.com/@7kirura",
@@ -158,7 +163,7 @@ export default function Home() {
 						<br />
 						<Highlight
 							query={["きるら", "(7)KiRura"]}
-							styles={{ color: "orange.300" }}
+							styles={{ color: { base: "orange.500", _dark: "orange.300" } }}
 						>
 							{"きるら,\n(7)KiRura,"}
 						</Highlight>
@@ -178,7 +183,7 @@ export default function Home() {
 								<LinkOverlay href={link.href} target="_blank" asChild>
 									<Card.Title asChild>
 										<Link colorPalette="orange">
-											<link.icon /> {link.name}
+											<link.icon /> {link.label}
 										</Link>
 									</Card.Title>
 								</LinkOverlay>
@@ -256,7 +261,6 @@ export default function Home() {
 				<Container centerContent>
 					<Image
 						src={`https://count.getloli.com/@KiRura-website-rr${process.env.NODE_ENV === "production" ? "" : "-dev"}?darkmode=auto`}
-						loading="lazy"
 					/>
 				</Container>
 			</Box>

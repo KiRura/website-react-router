@@ -16,7 +16,7 @@ import { pages } from "../page";
 
 export default function Header() {
 	return (
-		<Box as="header" pos="sticky" top="0" zIndex="docked" py="2">
+		<Box as="header" pos="sticky" top="0" zIndex="docked" py="2" hideBelow="sm">
 			<Container centerContent flexDir="row" justifyContent="space-between">
 				<HStack
 					as="nav"
@@ -59,21 +59,27 @@ export default function Header() {
 								css={{
 									"&:is(.active)": {
 										fontWeight: "medium",
-										color: "fg",
+										color: "orange.fg",
 										borderYWidth: "2px",
 										borderBottomColor: "orange.solid",
 									},
 									"&:is(.pending)": {
 										fontWeight: "medium",
 										color: "fg",
+										borderYWidth: "2px",
+										borderBottomColor: "border.emphasized",
 										animation: "pulse 1s ease-in-out infinite",
 									},
 								}}
 								_hover={{
 									color: "fg",
 								}}
+								transitionProperty="color, background, border"
 							>
-								<NavLink to={page.to}>{page.label}</NavLink>
+								<NavLink to={page.to}>
+									{page.icon && <page.icon />}
+									{page.label}
+								</NavLink>
 							</Button>
 						))}
 					</HStack>
@@ -89,7 +95,7 @@ export default function Header() {
 					// hey chakra wtf is this????
 					backdropFilter="blur({blurs.md})"
 				>
-					<IconButton asChild>
+					<IconButton aria-label="Source" asChild>
 						<a
 							href="https://github.com/KiRura/website-react-router"
 							target="_blank"

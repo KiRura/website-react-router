@@ -8,7 +8,7 @@ import {
 export default [
 	layout("routes/layout.tsx", [
 		index("routes/home.tsx"),
-		route("posts", "routes/posts.tsx"),
-		route("posts/:id", "routes/post.tsx"),
+		route("posts", "routes/posts/index.tsx"),
+		route("posts/:id", "routes/posts/post.tsx"),
 	]),
 ] satisfies RouteConfig;
