@@ -1,12 +1,4 @@
-import {
-	Box,
-	Container,
-	Em,
-	Heading,
-	Image,
-	Text,
-	VStack,
-} from "@chakra-ui/react";
+import { Box, Container, Heading, Image, Text, VStack } from "@chakra-ui/react";
 import { data } from "react-router";
 import { Prose } from "~/components/ui/prose";
 import { getPost } from "~/lib/cms.server";
@@ -15,7 +7,7 @@ import type { Route } from "./+types/post";
 
 export function headers() {
 	return {
-		"Cache-Control": "max-age=60, must-revalidate",
+		"Cache-Control": "max-age=240, must-revalidate",
 	};
 }
 
@@ -39,6 +31,7 @@ export default ({ loaderData }: Route.ComponentProps) => {
 			<article>
 				<VStack
 					data-hasimage={Boolean(loaderData.coverImage) || undefined}
+					as="hgroup"
 					pos="relative"
 					py="8"
 					borderBottomWidth="1px"
@@ -51,6 +44,7 @@ export default ({ loaderData }: Route.ComponentProps) => {
 				>
 					{loaderData.coverImage && (
 						<Box
+							aria-hidden
 							_after={{
 								content: `""`,
 								pos: "absolute",
@@ -77,8 +71,8 @@ export default ({ loaderData }: Route.ComponentProps) => {
 						{loaderData.title}
 					</Heading>
 					{loaderData.subtitle && (
-						<Text maxW="65ch" mx="auto" zIndex="base">
-							<Em>{loaderData.subtitle}</Em>
+						<Text maxW="65ch" mx="auto" fontStyle="italic" zIndex="base">
+							{loaderData.subtitle}
 						</Text>
 					)}
 				</VStack>

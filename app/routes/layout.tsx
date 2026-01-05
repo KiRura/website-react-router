@@ -5,24 +5,6 @@ import Header from "~/components/navigation/header";
 import ZZZ from "~/components/zzz";
 import type { Route } from "./+types/layout";
 
-export function links() {
-	return [
-		{
-			rel: "preconnect",
-			href: "https://fonts.googleapis.com",
-		},
-		{
-			rel: "preconnect",
-			href: "https://fonts.gstatic.com",
-			crossOrigin: "true",
-		},
-		{
-			rel: "stylesheet",
-			href: "https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=M+PLUS+1+Code:wght@100..700&family=Noto+Sans+JP:wght@100..900&display=swap",
-		},
-	];
-}
-
 export default function Layout() {
 	const navigation = useNavigation();
 	const isNavigating = Boolean(navigation.location);
@@ -81,7 +63,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 				pos="absolute"
 				w="full"
 				h="full"
-				overflow="auto"
+				overflow="hidden"
 				disableHighlight
 				disableOptimize
 				text={message}
@@ -99,9 +81,9 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
 						</EmptyState.Title>
 						<EmptyState.Description>{details}</EmptyState.Description>
 						{stack && (
-							<pre>
-								<Code>{stack}</Code>
-							</pre>
+							<Code maxW="full" whiteSpace="pre" overflow="auto">
+								{stack}
+							</Code>
 						)}
 					</EmptyState.Content>
 				</EmptyState.Root>

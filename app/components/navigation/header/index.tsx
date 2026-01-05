@@ -17,7 +17,12 @@ import { pages } from "../page";
 export default function Header() {
 	return (
 		<Box as="header" pos="sticky" top="0" zIndex="docked" py="2" hideBelow="sm">
-			<Container centerContent flexDir="row" justifyContent="space-between">
+			<Container
+				centerContent
+				flexDir="row"
+				justifyContent="space-between"
+				gap="2"
+			>
 				<HStack
 					as="nav"
 					p="2.5"
@@ -31,7 +36,7 @@ export default function Header() {
 					backdropFilter="blur({blurs.md})"
 				>
 					<Link fontSize="xl" fontWeight="bold" asChild>
-						<RRLink to="/">
+						<RRLink to="/" prefetch="intent">
 							<Image
 								src="/kirura/512p.png"
 								alt="kirura icon"
@@ -41,10 +46,10 @@ export default function Header() {
 								mr="1"
 								fetchPriority="high"
 							/>
-							<Span hideBelow="sm">KiRura</Span>
+							<Span hideBelow="md">KiRura</Span>
 						</RRLink>
 					</Link>
-					<HStack gap="4">
+					<HStack gap="4" overflow="auto">
 						{pages.map((page) => (
 							<Button
 								key={page.to.toString()}
@@ -76,7 +81,7 @@ export default function Header() {
 								}}
 								transitionProperty="color, background, border"
 							>
-								<NavLink to={page.to}>
+								<NavLink to={page.to} prefetch="intent">
 									{page.icon && <page.icon />}
 									{page.label}
 								</NavLink>

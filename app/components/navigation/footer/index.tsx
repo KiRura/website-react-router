@@ -92,7 +92,7 @@ export default function Footer() {
 													}}
 													transitionProperty="border, color, background"
 												>
-													<NavLink to={page.to}>
+													<NavLink to={page.to} prefetch="viewport">
 														{page.icon && <page.icon />}
 														{page.label}
 													</NavLink>

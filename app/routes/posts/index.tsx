@@ -19,7 +19,7 @@ import type { Route } from "./+types";
 
 export function headers() {
 	return {
-		"Cache-Control": "max-age=60, must-revalidate",
+		"Cache-Control": "max-age=240, must-revalidate",
 	};
 }
 
@@ -45,24 +45,34 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 							<Timeline.Content as="article">
 								{post.publishedAt && (
 									<Timeline.Description
-										as="time"
+										asChild
 										title={new TZDate(
 											post.publishedAt,
 											"Asia/Tokyo",
 										).toISOString()}
 										w="fit"
 									>
-										<ClientOnly
-											fallback={format(
-												new TZDate(post.publishedAt, "Asia/Tokyo"),
-												"yyyy年M月d日",
-											)}
+										<time
+											dateTime={new TZDate(
+												post.publishedAt,
+												"Asia/Tokyo",
+											).toISOString()}
 										>
-											{() =>
-												// ???
-												format(new Date(post.publishedAt ?? 0), "yyyy年M月d日")
-											}
-										</ClientOnly>
+											<ClientOnly
+												fallback={format(
+													new TZDate(post.publishedAt, "Asia/Tokyo"),
+													"yyyy年M月d日",
+												)}
+											>
+												{() =>
+													// ???
+													format(
+														new Date(post.publishedAt ?? 0),
+														"yyyy年M月d日",
+													)
+												}
+											</ClientOnly>
+										</time>
 									</Timeline.Description>
 								)}
 								<Card.Root
@@ -98,7 +108,9 @@ export default function Page({ loaderData }: Route.ComponentProps) {
 									<Card.Body spaceY="1">
 										<Card.Title as="h1" fontSize="xl">
 											<LinkOverlay asChild>
-												<RRLink to={`/posts/${post.id}`}>{post.title}</RRLink>
+												<RRLink to={`/posts/${post.id}`} prefetch="render">
+													{post.title}
+												</RRLink>
 											</LinkOverlay>
 										</Card.Title>
 										{post.subtitle && (

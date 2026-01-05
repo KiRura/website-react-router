@@ -1,70 +1,27 @@
 import {
 	Box,
-	Button,
-	Card,
 	Center,
-	Clipboard,
 	Container,
 	Flex,
-	Highlight,
 	HStack,
 	Image,
 	Link,
-	LinkOverlay,
 	List,
 	SimpleGrid,
+	Span,
 	Table,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
 import { differenceInYears } from "date-fns";
 import type { IconType } from "react-icons";
-import { FaDiscord, FaEnvelope, FaTwitter, FaYoutube } from "react-icons/fa6";
 import { LuCalendar, LuThumbsUp } from "react-icons/lu";
 import ZZZ from "~/components/zzz";
+import Links from "./links";
 
-export function headers() {
-	return {
-		"Cache-Control": "max-age=31536000",
-	};
-}
-
-const links: {
-	label: string;
-	id: string;
-	description: string;
-	href: string;
-	icon: IconType;
-}[] = [
-	{
-		label: "Email",
-		id: "kirura@kirura.f5.si",
-		icon: FaEnvelope,
-		description: "なんかあれば",
-		href: "mailto:kirura@kirura.f5.si",
-	},
-	{
-		label: "Twitter",
-		id: "@7KiRura",
-		icon: FaTwitter,
-		description: "通知オンは100人 ブロックは3万人",
-		href: "https://x.com/7KiRura",
-	},
-	{
-		label: "Discord",
-		id: "7kirura",
-		icon: FaDiscord,
-		description: "いつもここにいる",
-		href: "https://discord.com/users/606093171151208448",
-	},
-	{
-		label: "YouTube",
-		id: "@7KiRura",
-		icon: FaYoutube,
-		description: "上げたい時に上げてる",
-		href: "https://www.youtube.com/@7KiRura",
-	},
-];
+export const headers = () => ({
+	"Cache-Control": "max-age=31536000",
+});
 
 const icons = [
 	{
@@ -135,22 +92,59 @@ const info: {
 ];
 
 export default function Home() {
+	// const [scrollPos, setScrollPos] = useState(0);
+
+	// useEffect(() => {
+	// 	function handleScroll() {
+	// 		setScrollPos(
+	// 			Math.floor((window.pageYOffset / window.innerHeight) * 75) / 75,
+	// 		);
+	// 	}
+
+	// 	handleScroll();
+	// 	window.addEventListener("scroll", handleScroll, { passive: true });
+
+	// 	return () => window.removeEventListener("scroll", handleScroll);
+	// }, []);
+
+	// scrollPosが変化するだけで<ZZZ/>配下のSimpleGridに再描画が走る
+	// FUCK REACT
+
 	return (
-		<Box as="main">
+		<main>
+			{/*
+				FireFox:
+				- 初回表示: 問題無し
+				- リロード時: 何回か移動して元に戻る
+				- ウィンドウリサイズをしまくったり拡大縮小しまくったりするといつの間にか直る
+				- 開発者ツールで要素を選択すると勝手に移動
+				- Clipboard.Indicatorが変化すると勝手に移動
+
+				Chromium:
+				- 初回表示: 問題無し
+				- リロード時: 70vhぐらい下に移動
+				
+				wtf???
+			*/}
 			<ZZZ
 				pos="absolute"
 				top="0"
+				left="0"
 				w="full"
 				h={{ "2xlDown": "vh", "2xl": "60rem" }}
 				maxH="full"
 				overflow="hidden"
 				userSelect="none"
+				// opacity="calc(1 - var(--scroll-pos))"
+				// _hidden={{ display: "none" }}
 				_after={{
 					pos: "absolute",
 					top: "0",
+					left: "0",
 					content: `""`,
 					w: "full",
-					h: "full",
+					h: { "2xlDown": "vh", "2xl": "60rem" },
+					maxH: "full",
 					bgGradient: "to-b",
 					gradientFrom: "transparent",
 					gradientTo: "bg",
@@ -164,83 +158,28 @@ export default function Home() {
 						fontSize={["5xl", "6xl", "7xl"]}
 						fontWeight="bold"
 						fontFamily={`"Google Sans Code", "Noto Sans JP", sans-serif`}
-						whiteSpace="pre-wrap"
 						filter="drop-shadow(0px 4px 8px {colors.bg/80})"
 					>
 						Hello!,
 						<br />
-						<Highlight
-							query={["きるら", "(7)KiRura"]}
-							styles={{ color: { base: "orange.500", _dark: "orange.300" } }}
-						>
-							{"きるら,\n(7)KiRura,"}
-						</Highlight>
+						<Span color={{ base: "orange.500", _dark: "orange.300" }}>
+							きるら
+						</Span>
+						,
+						<br />
+						<Span color={{ base: "orange.500", _dark: "orange.300" }}>
+							(7)KiRura
+						</Span>
+						,
 					</Text>
 				</Center>
-				<SimpleGrid columns={[1, 2, 3, 4]} gap="2">
-					{links.map((link) => (
-						<Card.Root
-							key={link.href}
-							h="full"
-							size="sm"
-							_hover={{ bg: "bg.muted" }}
-							transition="backgrounds"
-							overflow="hidden"
-						>
-							<Card.Header
-								flexDirection="row"
-								alignItems="start"
-								justifyContent="space-between"
-								overflow="hidden"
-							>
-								<LinkOverlay href={link.href} target="_blank" asChild>
-									<Card.Title asChild>
-										<Link colorPalette="orange">
-											<link.icon /> {link.label}
-										</Link>
-									</Card.Title>
-								</LinkOverlay>
-								<Clipboard.Root
-									value={link.id}
-									maxW="5/12"
-									h="fit"
-									lineHeight={1}
-								>
-									<Clipboard.Trigger asChild>
-										<Button
-											p="0"
-											variant="plain"
-											size="xs"
-											h="fit"
-											w="full"
-											aria-label="copy id"
-											fontFamily="mono"
-											textAlign="right"
-											color="fg.muted"
-											gap="1"
-										>
-											<Clipboard.ValueText
-												overflow="hidden"
-												overflowWrap="anywhere"
-												textOverflow="ellipsis"
-											/>
-											<Clipboard.Indicator pos="sticky" right="0" />
-										</Button>
-									</Clipboard.Trigger>
-								</Clipboard.Root>
-							</Card.Header>
-							<Card.Body pt="1">
-								<Card.Description>{link.description}</Card.Description>
-							</Card.Body>
-						</Card.Root>
-					))}
-				</SimpleGrid>
+				<Links />
 				<SimpleGrid columns={{ md: 2 }} gap="6">
 					<Flex h="full" direction="column">
 						<Center h="full">
 							<SimpleGrid columns={2} gap="4" maxW="2xl">
 								{icons.map((icon) => (
-									<VStack key={icon.src}>
+									<VStack key={icon.src} as="figure">
 										<Image
 											src={icon.src}
 											loading="lazy"
@@ -249,7 +188,9 @@ export default function Home() {
 											aspectRatio="square"
 											alt={icon.alt}
 										/>
-										<Text color="fg.muted">{icon.subtle}</Text>
+										<Text color="fg.muted" as="figcaption">
+											{icon.subtle}
+										</Text>
 									</VStack>
 								))}
 							</SimpleGrid>
@@ -309,6 +250,6 @@ export default function Home() {
 					/>
 				</Container>
 			</Box>
-		</Box>
+		</main>
 	);
 }

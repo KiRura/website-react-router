@@ -48,6 +48,9 @@ export default function ZZZ(
 						animationName: "slide-to-right-full",
 					},
 				}}
+				_motionReduce={{
+					animation: "revert-layer",
+				}}
 			>
 				{props.text || "KiRura"}
 			</Text>
@@ -55,7 +58,14 @@ export default function ZZZ(
 	}));
 
 	return (
-		<Center {...props} animationName="fade-in" animationDuration="slow">
+		<Center
+			{...props}
+			animationName="fade-in"
+			animationDuration="slow"
+			_motionReduce={{
+				animation: "revert-layer",
+			}}
+		>
 			<SimpleGrid
 				css={{ "--columns": columns }}
 				rotate={["-90deg", "-45deg"]}
