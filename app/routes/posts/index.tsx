@@ -19,7 +19,7 @@ import type { Route } from "./+types";
 
 export function headers() {
 	return {
-		"Cache-Control": "max-age=240, must-revalidate",
+		"Cache-Control": "max-age=60, state-while-revalidate=3600, public",
 	};
 }
 

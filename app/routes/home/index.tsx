@@ -19,10 +19,6 @@ import { LuCalendar, LuThumbsUp } from "react-icons/lu";
 import ZZZ from "~/components/zzz";
 import Links from "./links";
 
-export const headers = () => ({
-	"Cache-Control": "max-age=31536000",
-});
-
 const icons = [
 	{
 		src: "/kirura/1024p.png",
