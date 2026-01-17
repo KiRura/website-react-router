@@ -17,11 +17,9 @@ import { getList } from "~/lib/cms.server";
 import { logger } from "~/lib/logger";
 import type { Route } from "./+types";
 
-export function headers() {
-	return {
-		"Cache-Control": "max-age=60, state-while-revalidate=3600, public",
-	};
-}
+export const headers: Route.HeadersFunction = () => ({
+	"Cache-Control": "max-age=60, state-while-revalidate=3600, public",
+});
 
 export async function loader() {
 	logger.info("fetching...", "all");

@@ -1,9 +1,24 @@
 import { Box, Code, Container, EmptyState, Spinner } from "@chakra-ui/react";
-import { isRouteErrorResponse, Outlet, useNavigation } from "react-router";
+import {
+	isRouteErrorResponse,
+	type MetaFunction,
+	Outlet,
+	useNavigation,
+} from "react-router";
 import Footer from "~/components/navigation/footer";
 import Header from "~/components/navigation/header";
 import ZZZ from "~/components/zzz";
+import { baseMeta } from "~/const/meta";
 import type { Route } from "./+types/layout";
+
+export const meta: MetaFunction = () => baseMeta;
+
+export const links: Route.LinksFunction = () => [
+	{
+		rel: "icon",
+		href: "/kirura/rounded/favicon.ico",
+	},
+];
 
 export default function Layout() {
 	const navigation = useNavigation();
@@ -11,13 +26,6 @@ export default function Layout() {
 
 	return (
 		<>
-			<title>KiRura</title>
-			<meta name="description" content="しがないReact Routerサイト" />
-			<meta name="og:image" content="/kirura/512p.png" />
-			{/* nextjsのbaseurlが欲しい */}
-			<meta name="twitter:card" content="summary" />
-			<meta name="darkreader-lock" />
-
 			<Box smDown={{ minH: "vh" }}>
 				<Header />
 				{isNavigating ? (
